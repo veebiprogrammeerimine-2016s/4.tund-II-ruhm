@@ -31,6 +31,8 @@
 	
 	function login ($email, $password) {
 		
+		$error = "";
+		
 		$database = "if16_romil";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
 
@@ -58,16 +60,17 @@
 			if ($hash == $passwordFromDb) {
 				echo "Kasutaja logis sisse ".$id;
 			}else {
-				echo "vale parool";
+				$error = "vale parool";
 			}
 			
 			
 		} else {
 			
 			// ei leidnud kasutajat selle meiliga
-			echo "ei ole sellist emaili";
+			$error = "ei ole sellist emaili";
 		}
 		
+		return $error;
 		
 	}
 	

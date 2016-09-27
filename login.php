@@ -106,8 +106,8 @@
 		!empty($_POST["loginEmail"]) && !empty($_POST["loginPassword"])
 	  ) {
 		  
-		login($_POST["loginEmail"], $_POST["loginPassword"]);
-		  
+		$error = login($_POST["loginEmail"], $_POST["loginPassword"]);
+		
 	}
 	
 
@@ -121,7 +121,7 @@
 
 	<h1>Logi sisse</h1>
 	<form method="POST">
-		
+		<p style="color:red;"><?=$error;?></p>
 		<label>E-post</label>
 		<br>
 		
