@@ -29,7 +29,47 @@
 	}
 	
 	
+	function login ($email, $password) {
+		
+		$database = "if16_romil";
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+
+		$stmt = $mysqli->prepare("
+		SELECT id, email, password, created 
+		FROM user_sample
+		WHERE email = ?");
 	
+		echo $mysqli->error;
+		
+		//asendan küsimärgi
+		$stmt->bind_param("s", $email);
+		
+		//määran väärtused muutujatesse
+		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created);
+		$stmt->execute();
+		
+		//andmed tulid andmebaasist või mitte
+		// on tõene kui on vähemalt üks vaste
+		if($stmt->fetch()){
+			
+			//oli sellise meiliga kasutaja
+			//password millega kasutaja tahab sisse logida
+			$hash = hash("sha512", $password);
+			if ($hash == $passwordFromDb) {
+				echo "Kasutaja logis sisse ".$id;
+			}else {
+				echo "vale parool";
+			}
+			
+			
+		} else {
+			
+			// ei leidnud kasutajat selle meiliga
+			echo "ei ole sellist emaili";
+		}
+		
+		
+	}
 	
 	
 	
