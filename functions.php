@@ -2,6 +2,10 @@
 	// functions.php
 	//var_dump($GLOBALS);
 	
+	// see fail, peab olema kõigil lehtedel kus 
+	// tahan kasutada SESSION muutujat
+	session_start();
+	
 	//***************
 	//**** SIGNUP ***
 	//***************
@@ -58,7 +62,16 @@
 			//password millega kasutaja tahab sisse logida
 			$hash = hash("sha512", $password);
 			if ($hash == $passwordFromDb) {
+				
 				echo "Kasutaja logis sisse ".$id;
+				
+				//määran sessiooni muutujad, millele saan ligi
+				// teistelt lehtedelt
+				$_SESSION["userId"] = $id;
+				$_SESSION["userEmail"] = $emailFromDb;
+				
+				header("Location: data.php");
+				
 			}else {
 				$error = "vale parool";
 			}
