@@ -1,6 +1,7 @@
 <?php 
 	
 	require("../../../config.php");
+	require("functions.php");
 
 	//echo hash("sha512", "b");
 	
@@ -93,39 +94,9 @@
 		
 		//echo $serverUsername;
 		
-		// ÜHENDUS
-		$database = "if16_romil";
-		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword, $database);
+		// KASUTAN FUNKTSIOONI
+		signUp($signupEmail, $password);
 		
-		// meie serveris nagunii 
-		if ($mysqli->connect_error) {
-			die('Connect Error: ' . $mysqli->connect_error);
-		}
-		
-		// sqli rida
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
-		
-		echo $mysqli->error;
-		
-		// stringina üks täht iga muutuja kohta (?), mis tüüp
-		// string - s
-		// integer - i
-		// float (double) - d
-		// küsimärgid asendada muutujaga
-		$stmt->bind_param("ss", $signupEmail, $password);
-		
-		//täida käsku
-		if($stmt->execute()) {
-			
-			echo "salvestamine õnnestus";
-			
-		} else {
-		 	echo "ERROR ".$stmt->error;
-		}
-		
-		//panen ühenduse kinni
-		$stmt->close();
-		$mysqli->close();
 	
 	}
 	
