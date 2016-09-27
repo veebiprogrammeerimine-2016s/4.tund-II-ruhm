@@ -2,6 +2,15 @@
 	
 	require("../../../config.php");
 	require("functions.php");
+	
+	// kui on juba sisse loginud siis suunan data lehele
+	if (isset($_SESSION["userId"])){
+		
+		//suunan sisselogimise lehele
+		header("Location: data.php");
+		
+	}
+	
 
 	//echo hash("sha512", "b");
 	
